@@ -33,10 +33,10 @@ jobs:
         run: docker-compose exec --tty client npm run prettier:check 
       - name: Run Setup App
         run: |
-          docker-compose exec api python manage.py recreate_db
-          docker-compose exec api python manage.py seed_db
+          docker-compose exec --tty api python manage.py recreate_db
+          docker-compose exec --tty api python manage.py seed_db
       - name: Run Python Tests
-        run: docker-compose exec api python -m pytest "src/tests" -p no:warnings
+        run: docker-compose exec --tty api python -m pytest "src/tests" -p no:warnings
       - name: Run Client Tests
         run: docker-compose exec client npm test
 
