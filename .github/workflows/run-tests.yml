@@ -38,5 +38,5 @@ jobs:
       - name: Run Python Tests
         run: docker-compose exec --tty api python -m pytest "src/tests" -p no:warnings
       - name: Run Client Tests
-        run: docker-compose exec client npm test
+        run: docker-compose exec --tty client npm test
 
