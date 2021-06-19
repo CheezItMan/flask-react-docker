@@ -123,7 +123,7 @@ def test_remove_user_incorrect_id(test_app, test_database):
 
 
 def test_update_user(test_app, test_database, add_user):
-    user = add_user("user-to-be-updated", "update-me@testdriven.io", , password="12345")
+    user = add_user("user-to-be-updated", "update-me@testdriven.io", password="12345")
     client = test_app.test_client()
     resp_one = client.put(
         f"/users/{user.id}",
