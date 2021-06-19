@@ -2,8 +2,8 @@
 
 name: Run Tests
 
-env: 
-  - 
+# env: 
+#   - 
 
 # Controls when the action will run. 
 on:
@@ -27,3 +27,5 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      # Use Docker compose Github action
+      - uses: isbang/compose-action@v1.0.0
