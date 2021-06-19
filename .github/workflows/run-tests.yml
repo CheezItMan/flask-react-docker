@@ -30,7 +30,7 @@ jobs:
       # Use Docker compose Github action
       - uses: isbang/compose-action@v1.0.0
       - name: Run Prettier Check
-        run: docker-compose exec client npm run prettier:check 
+        run: docker-compose exec --tty client npm run prettier:check 
       - name: Run Setup App
         run: |
           docker-compose exec api python manage.py recreate_db
