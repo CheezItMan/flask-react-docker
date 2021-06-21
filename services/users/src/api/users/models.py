@@ -2,9 +2,12 @@
 
 import os
 
+from flask.globals import current_app
 from sqlalchemy.sql import func
 
-from src import db, bcrypt
+from src import bcrypt, db
+import datetime
+import jwt
 
 
 class User(db.Model):
@@ -21,7 +24,23 @@ class User(db.Model):
     def __init__(self, username, email, password=""):
         self.username = username
         self.email = email
-        self.password = bcrypt.generate_password_hash(password).decode()
+        self.password = bcrypt.generate_password_hash(
+            password, current_app.config.get("BCRYPT_LOG_ROUNDS")
+        ).decode()
+
+    def encode_token(self, user_id):
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(
+                days=0, seconds=5),
+            'iat': datetime.datetime.utcnow(),
+            'sub': user_id,
+        }
+
+        return jwt.encode(
+            payload,
+            current_app.config.get('SECRET_KEY'),
+            algorithm='HS256'
+        )
 
 
 if os.getenv("FLASK_ENV") == "development":
