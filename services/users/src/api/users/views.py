@@ -25,10 +25,10 @@ user = users_namespace.model(
         "created_date": fields.DateTime,
     },
 )
+user_post = users_namespace.inherit(
+    "User post", user, {"password": fields.String(required=True)}
+)
 
-user_post = users_namespace.inherit("User post", user, {
-    "password": fields.String(required=True)
-})
 
 class UsersList(Resource):
     @users_namespace.marshal_with(user, as_list=True)
@@ -52,7 +52,7 @@ class UsersList(Resource):
             response_object["message"] = "Sorry. That email already exists."
             return response_object, 400
 
-        add_user(username, email, password=password)
+        add_user(username, email, password)
 
         response_object["message"] = f"{email} was added!"
         return response_object, 201
